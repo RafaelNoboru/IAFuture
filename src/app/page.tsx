@@ -13,12 +13,12 @@ export default function Home() {
               <AvatarFallback>AU</AvatarFallback>
             </Avatar>
             <Link href="/sobre">
-            <span className="text-white text-lg font-sans">Sobre nós</span>
+              <span className="text-white text-lg font-sans">Sobre nós</span>
             </Link>
           </div>
         </div>
       </header>
-      
+
       <div className="flex-1 flex flex-col items-center justify-center p-4">
         <h1 className="text-6xl font-bold text-white mb-8">IA FUTURE</h1>
 
@@ -48,13 +48,13 @@ export default function Home() {
                   required
                 />
               </div>
-              <Link href="/principal">
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                Login
-              </button>
+              <Link href="/conta">
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  Login
+                </button>
               </Link>
             </form>
             <div className="mt-4 text-center">
