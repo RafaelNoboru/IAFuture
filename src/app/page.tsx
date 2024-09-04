@@ -1,8 +1,21 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { useState } from "react";
+import { useLogin } from "./actions/login-actions";
 
 export default function Home() {
+  const { login, error, isLoading } = useLogin();
+  const [username, setUsername] = useState('');
+  const [senha, setSenha] = useState(''); 
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login({ username, senha });
+  };
+
   return (
     <main className="min-h-screen flex flex-col bg-[url('/fundo.jpg')] bg-cover bg-center bg-no-repeat">
       <header className="bg-blue-900 p-4 w-full">
@@ -27,36 +40,39 @@ export default function Home() {
             <CardTitle className="text-2xl font-semibold">Login</CardTitle>
           </CardHeader>
           <CardContent>
-            <form>
+            <form onSubmit={handleSubmit}> {}
               <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
                 <input
-                  id="email"
-                  type="email"
-                  placeholder="Digite seu email"
+                  id="username"
+                  type="text"
+                  placeholder="Digite seu username"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
               <div className="mb-6">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">Senha</label>
+                <label htmlFor="senha" className="block text-sm font-medium text-gray-700">Senha</label>
                 <input
-                  id="password"
+                  id="senha" 
                   type="password"
                   placeholder="Digite sua senha"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => setSenha(e.target.value)} 
                   required
                 />
               </div>
               <Link href="/conta">
-                <button
-                  type="submit"
-                  className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  Login
-                </button>
+              <button
+                type="submit" 
+                className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {isLoading ? 'Entrando...' : 'Login'} {}
+              </button>
               </Link>
             </form>
+            {error && <div className="mt-4 text-center text-red-500">{error}</div>} {}
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-600">Não tem uma conta?</p>
               <Link href="/cadastro">
