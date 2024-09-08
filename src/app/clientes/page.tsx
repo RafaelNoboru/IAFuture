@@ -36,7 +36,6 @@ export default function Cliente(){
         fetchClientes();
     }, []);
 
-   
     return (
         <main className="min-h-screen flex flex-col bg-[url('/fundo.jpg')] bg-cover bg-center bg-no-repeat">
             <header className="bg-blue-900 p-4 w-full">
@@ -51,11 +50,11 @@ export default function Cliente(){
                         </Link>
                         <Link href="/resultados">
                             <span className="text-white px-10 text-lg font-sans">Resultados da IA</span>
+
                         </Link>
                     </div>
                 </div>
             </header>
-
             <div className="flex-1 flex flex-col items-center justify-center p-4">
                 <Card className="w-full max-w-5xl bg-white shadow-lg rounded-lg">
                     <CardHeader>
@@ -94,5 +93,4 @@ export default function Cliente(){
         </main>
     );
 };
-
 
