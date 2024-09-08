@@ -5,15 +5,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { useState } from "react";
 import { useLogin } from "./actions/login-actions";
+import { useRouter } from "next/navigation";
+
+export interface Cliente {
+  id_cliente: number;
+  nome: string;
+  email: string;
+  data_nascimento: string;
+  cpf: string;
+  telefone: string;
+}
 
 export default function Home() {
   const { login, error, isLoading } = useLogin();
   const [username, setUsername] = useState('');
-  const [senha, setSenha] = useState(''); 
+  const [senha, setSenha] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login({ username, senha });
+    try {
+      await login({ username, senha });
+      router.push('/conta'); 
+    } catch (err) {
+      console.error('Login falhou:', err);
+    }
   };
 
   return (
@@ -26,7 +42,7 @@ export default function Home() {
               <AvatarFallback>AU</AvatarFallback>
             </Avatar>
             <Link href="/sobre">
-              <span className="text-white text-lg font-sans">Sobre nós</span>
+              <span className="text-white px-10 text-lg font-sans">Sobre nós</span>
             </Link>
           </div>
         </div>
@@ -40,7 +56,7 @@ export default function Home() {
             <CardTitle className="text-2xl font-semibold">Login</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit}> {}
+            <form onSubmit={handleLogin}>
               <div className="mb-4">
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
                 <input
@@ -63,16 +79,15 @@ export default function Home() {
                   required
                 />
               </div>
-              <Link href="/conta">
               <button
                 type="submit" 
                 className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled={isLoading}
               >
-                {isLoading ? 'Entrando...' : 'Login'} {}
+                {isLoading ? 'Entrando...' : 'Login'}
               </button>
-              </Link>
             </form>
-            {error && <div className="mt-4 text-center text-red-500">{error}</div>} {}
+            {error && <div className="mt-4 text-center text-red-500">{error}</div>}
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-600">Não tem uma conta?</p>
               <Link href="/cadastro">
